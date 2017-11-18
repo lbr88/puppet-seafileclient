@@ -45,7 +45,7 @@ define seafileclient::repo (
   }
 
 
-  if ($method == 'sync') {
+  if $method == 'sync' {
     file { "$path":
       ensure => directory,
       owner => $unixuser,
@@ -66,9 +66,9 @@ define seafileclient::repo (
       Package['seafile-cli'],
     ]
   }
-  if ( $managepermissions == true ) and ($unixuser != undef) and ($unixgroup != undef) {
+  if  $managepermissions == true and $unixuser != undef and $unixgroup != undef {
     exec {'seafile_chown':
-      command => "/usr/bin/find $path \( ! -user $unixuser -o ! -group $unixgroup \) -exec /bin/chown $unixuser:$unixgroup {} \;",
+      command => "/usr/bin/find $path \\( ! -user $unixuser -o ! -group $unixgroup \\) -exec /bin/chown $unixuser:$unixgroup {} \\;",
       require => Exec["addrepo_$id"],
     }
   }

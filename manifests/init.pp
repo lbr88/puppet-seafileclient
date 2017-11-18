@@ -12,20 +12,18 @@ class seafileclient {
     }
   }
   elsif ($facts['os']['name'] == 'Ubuntu') {
-    apt::ppa { 'ppa:seafile/seafile-client':
-      require => Package['software-properties-common'],
+    package { 'software-properties-common':
+      ensure => 'present',
     }
-
+    apt::ppa { 'ppa:seafile/seafile-client':
+      ensure => 'present',
+    }
     apt::source { 'seafile':
       ensure => absent,
     }
-
   } else {
     fail("os not supported")
   }
-  /*package { "python-searpc":
-    ensure => present,
-  }*/
   package { "seafile-cli":
     ensure => present,
   }
